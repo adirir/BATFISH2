@@ -1,0 +1,20 @@
+[leaf]
+leaf01    ansible_host=192.168.249.21
+leaf02    ansible_host=192.168.249.22
+leaf03    ansible_host=192.168.249.23
+leaf04    ansible_host=192.168.249.24
+
+[spine]
+spine01     ansible_host=192.168.249.11
+spine02     ansible_host=192.168.249.12
+
+[arista:children]
+leaf     
+spine
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+
+
+
+

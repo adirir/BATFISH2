@@ -1,0 +1,45 @@
+global:
+    p2p_prefix: 31
+    mgmt_prefix: 24
+    mgmt_gw: 192.168.249.2
+    fabric_subnet: 172.31.1.0/24
+    loopback_subnet: 10.100.1.0/24
+    bgp_asn: 65000
+    mlag_vlan: 4094
+    mgmt_vrf: MGMT
+    site: DC1
+    users:
+      - name: admin
+        privilege: 15
+        role: network-admin
+        password: arista
+    mgmt_prefixes:
+      - 10.8.0.0/24
+      - 192.168.249.0/24
+      - 192.168.0.0/24
+
+fabric:
+  spine01:
+    Ethernet1: {peer: leaf01, pport: Ethernet1, link_id: 1, prefix_id: 1}
+    Ethernet2: {peer: leaf02, pport: Ethernet1, link_id: 2, prefix_id: 1}
+    Ethernet3: {peer: leaf03, pport: Ethernet1, link_id: 3, prefix_id: 1}
+    Ethernet4: {peer: leaf04, pport: Ethernet1, link_id: 4, prefix_id: 1}
+   
+  spine02:
+    Ethernet2: {peer: leaf01, pport: Ethernet2, link_id: 6, prefix_id: 1}
+    Ethernet1: {peer: leaf02, pport: Ethernet2, link_id: 7, prefix_id: 1}
+    Ethernet3: {peer: leaf03, pport: Ethernet2, link_id: 8, prefix_id: 1}
+    Ethernet4: {peer: leaf04, pport: Ethernet2, link_id: 9, prefix_id: 1}
+   
+  leaf01:
+    Ethernet1: {peer: spine01, pport: Ethernet1, link_id: 1, prefix_id: 2}
+    Ethernet2: {peer: spine02, pport: Ethernet2, link_id: 6, prefix_id: 2}
+  leaf02:
+    Ethernet1: {peer: spine01, pport: Ethernet2, link_id: 2, prefix_id: 2}
+    Ethernet2: {peer: spine02, pport: Ethernet1, link_id: 7, prefix_id: 2}
+  leaf03:
+    Ethernet1: {peer: spine01, pport: Ethernet3, link_id: 3, prefix_id: 2}
+    Ethernet2: {peer: spine02, pport: Ethernet3, link_id: 8, prefix_id: 2}
+  leaf04:
+    Ethernet1: {peer: spine01, pport: Ethernet4, link_id: 4, prefix_id: 2}
+    Ethernet2: {peer: spine02, pport: Ethernet4, link_id: 9, prefix_id: 2}
